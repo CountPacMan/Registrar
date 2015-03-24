@@ -2,7 +2,8 @@
 <html>
   <head>
     <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <title>Your search results!!!</title>
+    <link rel='stylesheet' href='/../css/styles.css'>
+    <title>Registrarinator search results</title>
   </head>
   <body>
     <div class='container'>
@@ -14,17 +15,21 @@
       </div>
 
       {% if results is not empty %}
-        <h1>Your search results!!!</h1>
+        <h3>Search results</h3>
 
         {% for i in 0..results|length - 1 %}
           <ul>
             <li>
-              Student {{ search_term }}, enrolled in
+              <form action='/students/{{ results[i].getId }}' method='post' class='inlineForm'>
+                <input name='_method' type='hidden' value='delete'>
+                <input type='submit' class='deleteLink' value='x'>
+              </form>
+              {{ search_term }}, enrolled in
               {{ results_courses[i]|length > 1 ? 'courses' : 'course' }}
               {% for j in 0..results_courses[i]|length - 1 %}
-                [{{ results_courses[i][j].getName }}] 
+                [{{ results_courses[i][j].getName }}]
               {% endfor %}
-              enrolled on {{ results[i].getEnrollmentDate }}
+              on {{ results[i].getEnrollmentDate }}
             </li>
           </ul>
         {% endfor %}

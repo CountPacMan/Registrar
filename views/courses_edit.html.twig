@@ -2,6 +2,7 @@
 <html>
 <head>
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='/../css/styles.css'>
   <title>Edit a thing!</title>
 </head>
 <body>
@@ -29,7 +30,7 @@
     <form action='/courses/{{ course.getId }}' method='post'>
       <input name='_method' type='hidden' value='delete'>
 
-      <button type='submit' class='btn btn-success'>Delete this course!</button>
+      <button type='submit' class='btn btn-danger'>Delete this course!</button>
     </form>
     <p><a href='/'>Home</a></p>
   </div>

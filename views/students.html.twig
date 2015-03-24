@@ -2,10 +2,11 @@
 <html>
   <head>
     <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel='stylesheet' href='/../css/styles.css'>
     <title>Students</title>
   </head>
   <body>
-    <div class='container'>
+    <div class='container-fluid'>
 
       <!-- PAGE BANNER -->
       <div class='page-header'>
@@ -18,15 +19,16 @@
         {% for i in 0..results|length - 1 %}
           <ul>
             <li>
-              {{ results[i].getName }} in
+              <form action='/students/{{ results[i].getId }}' method='post' class='inlineForm'>
+                <input name='_method' type='hidden' value='delete'>
+                <input type='submit' class='deleteLink' value='x'>
+              </form>
+              {{ results[i].getName }}, enrolled in
               {{ results_courses[i]|length > 1 ? 'courses' : 'course' }}
               {% for j in 0..results_courses[i]|length - 1 %}
-                {% if j > 0 %}
-                  and
-                {% endif %}
-                {{ results_courses[i][j].getName }}
+                [{{ results_courses[i][j].getName }}]
               {% endfor %}
-              is due on {{ results[i].getEnrollmentDate }}
+              on {{ results[i].getEnrollmentDate }}
             </li>
           </ul>
         {% endfor %}

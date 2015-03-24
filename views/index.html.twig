@@ -2,7 +2,7 @@
 <html>
   <head>
     <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel='stylesheet' href='css/styles.css'>
+    <link rel='stylesheet' href='/../css/styles.css'>
     <title>Registrar</title>
   </head>
   <body>
@@ -11,30 +11,35 @@
 
       <!-- PAGE BANNER -->
       <div class='page-header'>
-        <img src='/img/logo.png' alt='university logo' />
-        <h1>Registrarinator</h1>
-        <h5>sweet regist-rawr-ing</h5>
+        <img src='/img/fakeu.png' alt='university logo'>
+        <div class='logo-words'>
+          <h1>Registrarinator</h1>
+          <h5>sweet regist-rawr-ing</h5>
+        </div>
       </div>
 
       <div class='row'>
         {% if courses is not empty %}
           <div class='col-md-12'>
 
-            <!-- SEARCH FOR TASKS -->
+            <!-- SEARCH FOR STUDENTS -->
             <form action='/search' method='post'>
               <div class='form-group'>
                 <label for='name'>Student to search:</label>
                 <input id='name' name='name' class='form-control' type='text' required>
               </div>
-              <button type='submit' class='btn btn-success'>GIMME</button>
+              <button type='submit' class='btn btn-success'>Search</button>
+            </form>
+            <form action='/students'>
+              <button type='submit' class='btn btn-primary'>All students</button>
             </form>
           </div>
         {% endif %}
       </div>
 
-      <!-- CATEGORIES AND TASKS ROW -->
+      <!-- COURSES AND STUDENTS ROW -->
       <div class='row'>
-        <!-- CATEGORIES -->
+        <!-- COURSES -->
         {% if courses is empty %}
           <div class='col-md-12'>
         {% else %}
@@ -55,7 +60,7 @@
             </form>
           </div>
 
-        <!-- TASKS -->
+        <!-- STUDENTS -->
         <div class='col-md-6'>
           {% if added %}
             <h3>Student added!</h3>
