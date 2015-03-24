@@ -53,8 +53,8 @@
   $app->post("/students", function() use ($app) {
     $student = new Student($_POST['name'], $_POST['enrollment_date']);
     $student->save();
-    for ($i = 0; $i < count($_POST['courses_id']); $i++) {
-      $course = Course::find($_POST['courses_id'][$i]);
+    for ($i = 0; $i < count($_POST['course_id']); $i++) {
+      $course = Course::find($_POST['course_id']);
       $course->addStudent($student);
     }
     return $app['twig']->render('index.html.twig', array('added' => true, 'courses' => Course::getAll()));
