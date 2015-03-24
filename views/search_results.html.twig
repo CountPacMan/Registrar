@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <title>Your search results!!!</title>
+  </head>
+  <body>
+    <div class='container'>
+      {% if results is not empty %}
+        <h1>Your search results!!!</h1>
+
+        {% for i in 0..results|length - 1 %}
+          <ul>
+            <li>
+              Your search term '{{ search_term }}' in
+              {{ results_categories[i]|length > 1 ? 'categories' : 'category' }}
+              {% for j in 0..results_categories[i]|length - 1 %}
+                {% if j > 0 %}
+                  and
+                {% endif %}
+                {{ results_categories[i][j].getName }}
+              {% endfor %}
+              is due on {{ results[i].getDueDate }}
+            </li>
+          </ul>
+        {% endfor %}
+      {% else %}
+        <h1>No results! =(</h1>
+      {% endif %}
+
+      <a href='/'>Home!</a>
+    </div>
+  </body>
+</html>

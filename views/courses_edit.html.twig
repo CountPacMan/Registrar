@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'>
+  <title>Edit a thing!</title>
+</head>
+<body>
+  <div class='container'>
+    <h1>Update the {{ category.getName }} category!</h1>
+
+    <form action='/categories/{{ category.getId }}' method='post'>
+      <input name='_method' type='hidden' value='patch'>
+
+      <div class='form-group'>
+        <label for='name'>Rename your category:</label>
+        <input id='name' name='name' class='form-control' type='text'>
+      </div>
+
+      <button type='submit' class='btn btn-success'>Update!</button>
+    </form>
+
+    <form action='/categories/{{ category.getId }}' method='post'>
+      <input name='_method' type='hidden' value='delete'>
+
+      <button type='submit' class='btn btn-success'>Delete this category!</button>
+    </form>
+  </div>
+</body>
+</html>

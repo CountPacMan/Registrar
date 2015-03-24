@@ -1,0 +1,17 @@
+#banner-img {
+  height: 50px;
+  width: 50px;
+  float: left;
+  clear: both;
+  margin: 0 10px 0 0;
+}
+
+
+h5 {
+  font-style: italic;
+  margin: 0;
+}
+
+button {
+  float: right;
+}

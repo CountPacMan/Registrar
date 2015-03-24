@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel='stylesheet' href='css/styles.css'>
+    <title>To Do List</title>
+  </head>
+  <body>
+
+    <div class='container'>
+
+      <!-- PAGE BANNER -->
+      <div class='page-header'>
+        <img src='/../img/honeydo.png' id='banner-img'><h1>Honey-Do</h1>
+        <h5>sweet productivity</h5>
+      </div>
+
+      {% if categories is not empty %}
+        <div class='col-md-12'>
+          <!-- SEARCH FOR TASKS -->
+          <form action='/search' method='post'>
+            <div class='form-group'>
+              <label for='name'>Task to search:</label>
+              <input id='name' name='name' class='form-control' type='text' required>
+            </div>
+            <button type='submit' class='btn btn-success'>GIMME</button>
+          </form>
+
+          <!-- <h3><a href="/tasks">View all current tasks</a></h3> -->
+
+        </div>
+      {% endif %}
+
+      <!-- CATEGORY -->
+      {% if categories is empty %}
+        <div class='col-md-12'>
+      {% else %}
+        <div class='col-md-6'>
+      {% endif %}
+          <h3>Create a new category</h3>
+
+          <form action='/categories' method='post'>
+            <div class='form-group'>
+              <label for='name'>Category name:</label>
+              <input id='name' name='name' class='form-control' type='text' required>
+            </div>
+            <button type='submit' class='btn btn-success'>Add category</button>
+          </form>
+        </div>
+
+      <!-- TASKS -->
+      <div class='col-md-6'>
+        {% if added %}
+          <h3>Task added!</h3>
+        {% endif %}
+        {% if categories is not empty %}
+          <h3>Create a new task</h3>
+
+          <form action='/tasks' method='post'>
+            <div class='form-group'>
+              <label for='description'>Task description:</label>
+              <input id='description' name='description' class='form-control' type='text' required>
+            </div>
+            <div class='form-group'>
+              <label for='due_date'>Task due date:</label>
+              <input id='due_date' name='due_date' class='form-control' type='text' required>
+            </div>
+            Select categories for task
+            <div class='form-group'>
+              {% for category in categories %}
+                <input type="checkbox" name="category_id[]" value="{{ category.getId }}"> <a href="/categories/{{ category.getId }}"> {{ category.getName }} </a><br>
+              {% endfor %}
+            </div>
+            <button type='submit' class='btn btn-success'>Add task</button>
+          </form>
+        {% endif %}
+      </div>
+
+    </div><!-- END CONTAINER -->
+  </div>
+  </body>
+</html>
