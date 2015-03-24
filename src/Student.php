@@ -57,10 +57,10 @@
         $course_id = $id['course_id'];
         $result = $GLOBALS['DB']->query("SELECT * FROM courses WHERE id = {$course_id};");
         $returned_course = $result->fetchAll(PDO::FETCH_ASSOC);
-
         $name = $returned_course[0]['name'];
+        $course_number = $returned_course[0]['course_number'];
         $id = $returned_course[0]['id'];
-        $new_course = new Course($name, $id);
+        $new_course = new Course($name, $course_number, $id);
         array_push($courses, $new_course);
       }
       return $courses;
@@ -95,7 +95,7 @@
         $id = $student['id'];
         $enrollment_date = $student['enrollment_date'];
         $enrollment_date = str_replace("-", "/", $enrollment_date);
-        $new_student = new Student($name, $id, $enrollment_date);
+        $new_student = new Student($name, $enrollment_date, $id);
         array_push($students, $new_student);
       }
       return $students;

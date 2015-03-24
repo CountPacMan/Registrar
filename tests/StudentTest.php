@@ -141,13 +141,11 @@
     function testAddCourse() {
       //Arrange
       $name = "Biscuitdoughhandsman";
-      $id = 1;
-      $test_course = new Course($name, 'M101', $id);
+      $test_course = new Course($name, 'M101');
       $test_course->save();
 
       $name = "Bob";
-      $id2 = 2;
-      $test_student = new Student($name, '1999/01/01', $id2);
+      $test_student = new Student($name, '1999/01/01');
       $test_student->save();
 
       //Act
