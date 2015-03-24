@@ -76,7 +76,14 @@
           </form>
         {% endif %}
       </div>
-
+      {% if courses is not empty %}
+        <div class='col-md-12'>
+          <form action='/destroy' method='post'>
+            <input name='_method' type='hidden' value='delete'>
+            <button type='submit' class='btn btn-warning'>Destroy database</button>
+          </form>
+        </div>
+      {% endif %}
     </div><!-- END CONTAINER -->
   </div>
   </body>

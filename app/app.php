@@ -54,7 +54,7 @@
     $student = new Student($_POST['name'], $_POST['enrollment_date']);
     $student->save();
     for ($i = 0; $i < count($_POST['course_id']); $i++) {
-      $course = Course::find($_POST['course_id']);
+      $course = Course::find($_POST['course_id'][$i]);
       $course->addStudent($student);
     }
     return $app['twig']->render('index.html.twig', array('added' => true, 'courses' => Course::getAll()));
@@ -86,10 +86,16 @@
     $name = $_POST['name'];
     $course = Course::find($id);
     $course->updateName($name);
-    return $app['twig']->render('course.html.twig', array('course' => $course, 'students' => $course->getStudents()));
+    return $app['twig']->render('courses.html.twig', array('course' => $course, 'students' => $course->getStudents()));
   });
 
   // delete
+
+  $app->delete("/destroy", function() use ($app) {
+    Course::deleteAll();
+    Student::deleteAll();
+    return $app['twig']->render('index.html.twig', array('added' => false, 'courses' => Course::getAll()));
+  });
 
   $app->delete("/courses/{id}", function($id) use ($app) {
     $course = Course::find($id);

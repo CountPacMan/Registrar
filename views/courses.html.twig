@@ -19,7 +19,7 @@
         <p>Here are the students:</p>
         <ul>
           {% for student in students %}
-            <li>{{ student.getName }} due {{ student.getEnrollmentDate }}</li>
+            <li>{{ student.getName }} enrolled {{ student.getEnrollmentDate }}</li>
           {% endfor %}
         </ul>
       {% endif %}
@@ -27,7 +27,7 @@
       <h4>Add a student</h4>
 
       <form action='/students' method='post'>
-        <input id='course_id' name='course_id' type='hidden' value='{{ course.getId }}'>
+        <input id='course_id' name='course_id[]' type='hidden' value='{{ course.getId }}'>
         <div class='form-group'>
           <label for='name'>Student name:</label>
           <input id='name' name='name' class='form-control' type='text' required>
