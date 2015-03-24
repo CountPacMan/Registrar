@@ -7,84 +7,97 @@
   </head>
   <body>
 
-    <div class='container'>
+    <div class='container-fluid'>
 
       <!-- PAGE BANNER -->
       <div class='page-header'>
+        <img src='/img/logo.png' alt='university logo' />
         <h1>Registrarinator</h1>
         <h5>sweet regist-rawr-ing</h5>
       </div>
 
-      {% if courses is not empty %}
-        <div class='col-md-12'>
-          <!-- SEARCH FOR TASKS -->
-          <form action='/search' method='post'>
-            <div class='form-group'>
-              <label for='name'>Student to search:</label>
-              <input id='name' name='name' class='form-control' type='text' required>
-            </div>
-            <button type='submit' class='btn btn-success'>GIMME</button>
-          </form>
-        </div>
-      {% endif %}
-
-      <!-- CATEGORY -->
-      {% if courses is empty %}
-        <div class='col-md-12'>
-      {% else %}
-        <div class='col-md-6'>
-      {% endif %}
-          <h3>Create a new course</h3>
-
-          <form action='/courses' method='post'>
-            <div class='form-group'>
-              <label for='name'>Course name:</label>
-              <input id='name' name='name' class='form-control' type='text' required>
-            </div>
-            <div class='form-group'>
-              <label for='course_number'>Course number:</label>
-              <input id='course_number' name='course_number' class='form-control' type='text' required>
-            </div>
-            <button type='submit' class='btn btn-success'>Add course</button>
-          </form>
-        </div>
-
-      <!-- TASKS -->
-      <div class='col-md-6'>
-        {% if added %}
-          <h3>Student added!</h3>
-        {% endif %}
+      <div class='row'>
         {% if courses is not empty %}
-          <h3>Create a new student</h3>
+          <div class='col-md-12'>
 
-          <form action='/students' method='post'>
-            <div class='form-group'>
-              <label for='name'>Student name:</label>
-              <input id='name' name='name' class='form-control' type='text' required>
-            </div>
-            <div class='form-group'>
-              <label for='enrollment_date'>Student Enrollment Date:</label>
-              <input id='enrollment_date' name='enrollment_date' class='form-control' type='text' required>
-            </div>
-            Select courses for student
-            <div class='form-group'>
-              {% for course in courses %}
-                <input type="checkbox" name="course_id[]" value="{{ course.getId }}"> <a href="/courses/{{ course.getId }}"> {{ course.getName }} </a><br>
-              {% endfor %}
-            </div>
-            <button type='submit' class='btn btn-success'>Add student</button>
-          </form>
+            <!-- SEARCH FOR TASKS -->
+            <form action='/search' method='post'>
+              <div class='form-group'>
+                <label for='name'>Student to search:</label>
+                <input id='name' name='name' class='form-control' type='text' required>
+              </div>
+              <button type='submit' class='btn btn-success'>GIMME</button>
+            </form>
+          </div>
         {% endif %}
       </div>
-      {% if courses is not empty %}
-        <div class='col-md-12'>
-          <form action='/destroy' method='post'>
-            <input name='_method' type='hidden' value='delete'>
-            <button type='submit' class='btn btn-warning'>Destroy database</button>
-          </form>
+
+      <!-- CATEGORIES AND TASKS ROW -->
+      <div class='row'>
+        <!-- CATEGORIES -->
+        {% if courses is empty %}
+          <div class='col-md-12'>
+        {% else %}
+          <div class='col-md-6'>
+        {% endif %}
+            <h3>Create a new course</h3>
+
+            <form action='/courses' method='post'>
+              <div class='form-group'>
+                <label for='name'>Course name:</label>
+                <input id='name' name='name' class='form-control' type='text' required>
+              </div>
+              <div class='form-group'>
+                <label for='course_number'>Course number:</label>
+                <input id='course_number' name='course_number' class='form-control' type='text' required>
+              </div>
+              <button type='submit' class='btn btn-success'>Add course</button>
+            </form>
+          </div>
+
+        <!-- TASKS -->
+        <div class='col-md-6'>
+          {% if added %}
+            <h3>Student added!</h3>
+          {% endif %}
+          {% if courses is not empty %}
+            <h3>Create a new student</h3>
+
+            <form action='/students' method='post'>
+              <div class='form-group'>
+                <label for='name'>Student name:</label>
+                <input id='name' name='name' class='form-control' type='text' required>
+              </div>
+              <div class='form-group'>
+                <label for='enrollment_date'>Student Enrollment Date:</label>
+                <input id='enrollment_date' name='enrollment_date' class='form-control' type='text' required>
+              </div>
+              Select courses for student
+              <div class='form-group'>
+                {% for course in courses %}
+                  <input type="checkbox" name="course_id[]" value="{{ course.getId }}"> <a href="/courses/{{ course.getId }}"> {{ course.getName }} </a><br>
+                {% endfor %}
+              </div>
+              <button type='submit' class='btn btn-success'>Add student</button>
+            </form>
+          {% endif %}
         </div>
-      {% endif %}
+      </div>
+
+      <!-- FOOTER -->
+      <div class='page-footer'>
+        {% if courses is not empty %}
+          <div class='row'>
+            <div id='footer' class='col-md-12'>
+              <form action='/destroy' method='post'>
+                <input name='_method' type='hidden' value='delete'>
+                <button type='submit' id='destroy' class='btn btn-danger center-block'>Destroy Database</button>
+              </form>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+
     </div><!-- END CONTAINER -->
-  </div>
   </body>
 </html>

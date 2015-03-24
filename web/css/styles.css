@@ -6,12 +6,32 @@
   margin: 0 10px 0 0;
 }
 
+img {
+  width: 75px;
+  height: 70px;
+  clear: both;
+
+}
+
+h1, h5 {
+  clear: both;
+}
+
+/*.col-md-12, .col-md-6 {
+  clear: both;
+}*/
 
 h5 {
   font-style: italic;
   margin: 0;
 }
 
-button {
+#destroy {
+  float: none;
+  text-align: center;
+  margin: 15px auto;
+}
+
+.btn {
   float: right;
 }
