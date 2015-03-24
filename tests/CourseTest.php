@@ -20,7 +20,7 @@
     function test_getName() {
       // Arrange
       $name = "Maths";
-      $test_course = new Course($name);
+      $test_course = new Course($name, 'M101');
 
       // Act
       $result = $test_course->getName();
@@ -33,7 +33,7 @@
       // Arrange
       $name = "Maths";
       $id = 1;
-      $test_course = new Course($name, $id);
+      $test_course = new Course($name, 'M101', $id);
 
       // Act
       $result = $test_course->getId();
@@ -45,7 +45,7 @@
     function test_setId() {
       // Assert
       $name = "Maths";
-      $test_course = new Course($name);
+      $test_course = new Course($name, 'M101');
 
       // Act
       $test_course->setId(2);
@@ -58,7 +58,7 @@
     function test_save() {
       // Arrange
       $name = "Maths";
-      $test_course = new Course($name);
+      $test_course = new Course($name, 'M101');
       $test_course->save();
 
       // Act
@@ -72,9 +72,9 @@
       // Arrange
       $name = "Maths";
       $name2 = "Sciences";
-      $test_course = new Course($name);
+      $test_course = new Course($name, 'M101');
       $test_course->save();
-      $test_course2 = new Course($name2);
+      $test_course2 = new Course($name2, 'M101');
       $test_course2->save();
 
       // Act
@@ -88,9 +88,9 @@
       // Arrange
       $name = "Maths";
       $name2 = "Sciences";
-      $test_course = new Course($name);
+      $test_course = new Course($name, 'M101');
       $test_course->save();
-      $test_course2 = new Course($name);
+      $test_course2 = new Course($name, 'M101');
       $test_course2->save();
 
       // Act
@@ -106,12 +106,12 @@
       //Arrange
       $name = "Maths";
       $id = 1;
-      $test_course = new Course($name, $id);
+      $test_course = new Course($name, 'M101', $id);
       $test_course->save();
 
       $student_name = "Dennis Lumberg";
       $id2 = 2;
-      $test_student = new Student($student_name, $id2);
+      $test_student = new Student($student_name, '1999/01/01', $id2);
       $test_student->save();
 
       //Act
@@ -126,9 +126,9 @@
       // Arrange
       $name = "Maths";
       $name2 = "Sciences";
-      $test_course = new Course($name);
+      $test_course = new Course($name, 'M101');
       $test_course->save();
-      $test_course2 = new Course($name2);
+      $test_course2 = new Course($name2, 'M101');
       $test_course2->save();
 
       // Act
@@ -142,12 +142,12 @@
         //Arrange
         $name = "Maths";
         $id = 1;
-        $test_course = new Course($name, $id);
+        $test_course = new Course($name, 'M101', $id);
         $test_course->save();
 
         $student_name = "Dennis Lumberg";
         $id2 = 2;
-        $test_student = new Student($student_name, $id2);
+        $test_student = new Student($student_name, '1999/01/01', $id2);
         $test_student->save();
 
         //Act
@@ -161,17 +161,17 @@
       // Arrange
       $name = "Maths";
       $id = 1;
-      $test_course = new Course($name, $id);
+      $test_course = new Course($name, 'M101', $id);
       $test_course->save();
 
       $student_name = "Biscuitdoughhandsman";
       $id2 = 2;
-      $test_student = new Student($student_name, $id2, '1999/01/01');
+      $test_student = new Student($student_name, '1999/01/01', $id2);
       $test_student->save();
 
       $student_name2 = "Bob";
       $id3 = 3;
-      $test_student2 = new Student($student_name2, $id3, '2000/01/01');
+      $test_student2 = new Student($student_name2, '1999/01/01', $id3);
       $test_student2->save();
 
       // Act
@@ -185,12 +185,12 @@
     function test_search() {
       // Arrange
       $name = "Maths";
-      $test_course = new Course($name);
+      $test_course = new Course($name, 'M101');
       $test_course->save();
 
       $test_course_id = $test_course->getId();
       $student_name = "Biscuitdoughhandsman";
-      $test_student = new Student($student_name);
+      $test_student = new Student($student_name, '1999/01/01');
       $test_student->save();
 
       // Act
@@ -200,20 +200,36 @@
       $this->assertEquals($test_student, $result[0]);
     }
 
-    function test_update() {
+    function test_updateName() {
       // Assert
       $name = "Maths";
       $id = null;
-      $test_course = new Course($name);
+      $test_course = new Course($name, 'M101');
       $test_course->save();
 
       $new_name = "Sciences";
 
       // Act
-      $test_course->update($new_name);
+      $test_course->updateName($new_name);
 
       // Assert
       $this->assertEquals("Sciences", $test_course->getName());
+    }
+
+    function test_updateCourseNumber() {
+      // Assert
+      $name = "Maths";
+      $id = null;
+      $test_course = new Course($name, 'M101');
+      $test_course->save();
+
+      $new_course_number = "M102";
+
+      // Act
+      $test_course->updateCourseNumber($new_course_number);
+
+      // Assert
+      $this->assertEquals("Maths", $test_course->getName());
     }
 
   }

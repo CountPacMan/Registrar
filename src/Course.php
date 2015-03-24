@@ -39,7 +39,7 @@ class Course {
   // dB
 
   function save() {
-    $statement = $GLOBALS['DB']->query("INSERT INTO courses (name, course_number) VALUES ('{$this->getName()}', '{$this->getNumber()}') RETURNING id;");
+    $statement = $GLOBALS['DB']->query("INSERT INTO courses (name, course_number) VALUES ('{$this->getName()}', '{$this->getCourseNumber()}') RETURNING id;");
     $result = $statement->fetch(PDO::FETCH_ASSOC);
     $this->setId($result['id']);
   }
@@ -56,70 +56,72 @@ class Course {
 
   function delete() {
     $GLOBALS['DB']->exec("DELETE FROM courses WHERE id = {$this->getId()};");
-    $GLOBALS['DB']->exec("DELETE FROM categories_tasks WHERE category_id = {$this->getId()};");
+    $GLOBALS['DB']->exec("DELETE FROM students_courses WHERE course_id = {$this->getId()};");
   }
 
-  function addTask($task) {
-    $GLOBALS['DB']->exec("INSERT INTO categories_tasks (category_id, task_id) VALUES ({$this->getId()}, {$task->getId()});");
+  function addStudent($student) {
+    $GLOBALS['DB']->exec("INSERT INTO students_courses (course_id, student_id) VALUES ({$this->getId()}, {$student->getId()});");
   }
 
-  function getTasks() {
-    $query = $GLOBALS['DB']->query("SELECT task_id FROM categories_tasks WHERE category_id = {$this->getId()};");
-    $task_ids = $query->fetchAll(PDO::FETCH_ASSOC);
+  function getStudents() {
+    $query = $GLOBALS['DB']->query("SELECT student_id FROM students_courses WHERE course_id = {$this->getId()};");
+    $student_ids = $query->fetchAll(PDO::FETCH_ASSOC);
 
-    $tasks = [];
-    foreach ($task_ids as $id) {
-      $task_id = $id['task_id'];
-      $result = $GLOBALS['DB']->query("SELECT * FROM tasks WHERE id = {$task_id};");
-      $returned_task = $result->fetchAll(PDO::FETCH_ASSOC);
+    $students = [];
+    foreach ($student_ids as $id) {
+      $student_id = $id['student_id'];
+      $result = $GLOBALS['DB']->query("SELECT * FROM students WHERE id = {$student_id};");
+      $returned_student = $result->fetchAll(PDO::FETCH_ASSOC);
 
-      $description = $returned_task[0]['description'];
-      $id = $returned_task[0]['id'];
-      $due_date = $returned_task[0]['due_date'];
-      $due_date = str_replace("-", "/", $due_date);
-      $new_task = new Task($description, $id, $due_date);
-      array_push($tasks, $new_task);
+      $name = $returned_student[0]['name'];
+      $id = $returned_student[0]['id'];
+      $enrollment_date = $returned_student[0]['enrollment_date'];
+      $enrollment_date = str_replace("-", "/", $enrollment_date);
+      $new_student = new Student($name, $enrollment_date, $id);
+      array_push($students, $new_student);
     }
-    return $tasks;
+    return $students;
   }
 
   static function getAll() {
-    $returned_categories = $GLOBALS['DB']->query("SELECT * FROM courses;");
+    $returned_courses = $GLOBALS['DB']->query("SELECT * FROM courses;");
     $courses = [];
-    foreach ($returned_categories as $category) {
-      $name = $category['name'];
-      $id = $category['id'];
-      $new_category = new Course($name, $id);
-      array_push($courses, $new_category);
+    foreach ($returned_courses as $course) {
+      $name = $course['name'];
+      $course_number = $course['course_number'];
+      $id = $course['id'];
+      $new_course = new Course($name, $course_number, $id);
+      array_push($courses, $new_course);
     }
     return $courses;
   }
 
   static function deleteAll() {
     $GLOBALS['DB']->exec("DELETE FROM courses *;");
+    $GLOBALS['DB']->exec("DELETE FROM students_courses *;");
   }
 
   static function find($search_id) {
-    $found_category = null;
+    $found_course = null;
     $courses = Course::getAll();
-    foreach($courses as $category) {
-      $category_id = $category->getId();
-      if($category_id == $search_id) {
-        $found_category = $category;
+    foreach($courses as $course) {
+      $course_id = $course->getId();
+      if($course_id == $search_id) {
+        $found_course = $course;
       }
     }
-    return $found_category;
+    return $found_course;
   }
 
-  static function search($description) {
-    $tasks = [];
-    $returned_tasks = $GLOBALS['DB']->query("SELECT * FROM tasks WHERE description = '{$description}';");
-    foreach ($returned_tasks as $task) {
-      $due_date = $task['due_date'];
-      $due_date = str_replace("-", "/", $due_date);
-      $new_Task = new Task($task['description'], $task['id'], $due_date);
-      array_push($tasks, $new_Task);
+  static function search($name) {
+    $students = [];
+    $returned_students = $GLOBALS['DB']->query("SELECT * FROM students WHERE name = '{$name}';");
+    foreach ($returned_students as $student) {
+      $enrollment_date = $student['enrollment_date'];
+      $enrollment_date = str_replace("-", "/", $enrollment_date);
+      $new_Student = new Student($student['name'], $enrollment_date, $student['id']);
+      array_push($students, $new_Student);
     }
-    return $tasks;
+    return $students;
   }
 }

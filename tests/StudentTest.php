@@ -19,7 +19,7 @@
     function test_save() {
       // Arrange
       $name = "Biscuitdoughhandsman";
-      $test_student = new Student($name);
+      $test_student = new Student($name, '1999/01/01');
 
       // Act
       $test_student->save();
@@ -33,9 +33,9 @@
       // Arrange
       $name = "Biscuitdoughhandsman";
       $name2 = "Bob";
-      $test_Student = new Student($name);
+      $test_Student = new Student($name, '1999/01/01');
       $test_Student->save();
-      $test_Student2 = new Student($name2);
+      $test_Student2 = new Student($name2, '1999/01/01');
       $test_Student2->save();
 
       // Act
@@ -49,9 +49,9 @@
       // Arrange
       $name = "Biscuitdoughhandsman";
       $name2 = "Bob";
-      $test_Student = new Student($name);
+      $test_Student = new Student($name, '1999/01/01');
       $test_Student->save();
-      $test_Student2 = new Student($name2);
+      $test_Student2 = new Student($name2, '1999/01/01');
       $test_Student2->save();
 
       // Act
@@ -66,12 +66,12 @@
       //Arrange
       $name = "Biscuitdoughhandsman";
       $id = 1;
-      $test_course = new Course($name, $id);
+      $test_course = new Course($name, 'M101', $id);
       $test_course->save();
 
       $name = "Bob";
       $id2 = 2;
-      $test_student = new Student($name, $id2);
+      $test_student = new Student($name, '1999/01/01', $id2);
       $test_student->save();
 
       //Act
@@ -86,7 +86,7 @@
       // Arrange
       $name = "Biscuitdoughhandsman";
       $id = 1;
-      $test_Student = new Student($name, $id);
+      $test_Student = new Student($name, '1999/01/01', $id);
 
       // Act
       $result = $test_Student->getId();
@@ -98,7 +98,7 @@
     function test_setId() {
       // Arrange
       $name = "Biscuitdoughhandsman";
-      $test_Student = new Student($name);
+      $test_Student = new Student($name, '1999/01/01');
 
       // Act
       $test_Student->setId(2);
@@ -112,9 +112,9 @@
       // Arrange
       $name = "Biscuitdoughhandsman";
       $name2 = "Bob";
-      $test_Student = new Student($name, 1);
+      $test_Student = new Student($name, '1999/01/01', 1);
       $test_Student->save();
-      $test_Student2 = new Student($name2, 1);
+      $test_Student2 = new Student($name2, '1999/01/01', 1);
       $test_Student2->save();
 
       // Act
@@ -128,7 +128,7 @@
       // Arrange
       $name = "Biscuitdoughhandsman";
       $enrollment_date = '1/18/1999';
-      $test_Student = new Student($name, 1, $enrollment_date);
+      $test_Student = new Student($name, $enrollment_date);
 
       // Act
       $result = $test_Student->getEnrollmentDate();
@@ -142,12 +142,12 @@
       //Arrange
       $name = "Biscuitdoughhandsman";
       $id = 1;
-      $test_course = new Course($name, $id);
+      $test_course = new Course($name, 'M101', $id);
       $test_course->save();
 
       $name = "Bob";
       $id2 = 2;
-      $test_student = new Student($name, $id2);
+      $test_student = new Student($name, '1999/01/01', $id2);
       $test_student->save();
 
       //Act
