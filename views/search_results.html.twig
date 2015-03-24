@@ -6,6 +6,13 @@
   </head>
   <body>
     <div class='container'>
+
+      <!-- PAGE BANNER -->
+      <div class='page-header'>
+        <h1>Registrarinator</h1>
+        <h5>sweet regist-rawr-ing</h5>
+      </div>
+
       {% if results is not empty %}
         <h1>Your search results!!!</h1>
 
@@ -13,14 +20,14 @@
           <ul>
             <li>
               Your search term '{{ search_term }}' in
-              {{ results_categories[i]|length > 1 ? 'categories' : 'category' }}
-              {% for j in 0..results_categories[i]|length - 1 %}
+              {{ results_courses[i]|length > 1 ? 'courses' : 'course' }}
+              {% for j in 0..results_courses[i]|length - 1 %}
                 {% if j > 0 %}
                   and
                 {% endif %}
-                {{ results_categories[i][j].getName }}
+                {{ results_courses[i][j].getName }}
               {% endfor %}
-              is due on {{ results[i].getDueDate }}
+              is due on {{ results[i].getEnrollmentDate }}
             </li>
           </ul>
         {% endfor %}
@@ -28,7 +35,7 @@
         <h1>No results! =(</h1>
       {% endif %}
 
-      <a href='/'>Home!</a>
+      <a href='/'>Home</a>
     </div>
   </body>
 </html>

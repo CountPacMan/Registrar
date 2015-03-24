@@ -2,32 +2,39 @@
 <html>
   <head>
     <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <title>Tasks</title>
+    <title>Students</title>
   </head>
   <body>
     <div class='container'>
+
+      <!-- PAGE BANNER -->
+      <div class='page-header'>
+        <h1>Registrarinator</h1>
+        <h5>sweet regist-rawr-ing</h5>
+      </div>
+
       {% if results is not empty %}
-        <h3>Your tasks</h3>
+        <h3>Your students</h3>
         {% for i in 0..results|length - 1 %}
           <ul>
             <li>
-              {{ results[i].getDescription }} in 
-              {{ results_categories[i]|length > 1 ? 'categories' : 'category' }}
-              {% for j in 0..results_categories[i]|length - 1 %}
+              {{ results[i].getName }} in
+              {{ results_courses[i]|length > 1 ? 'courses' : 'course' }}
+              {% for j in 0..results_courses[i]|length - 1 %}
                 {% if j > 0 %}
                   and
                 {% endif %}
-                {{ results_categories[i][j].getName }}
+                {{ results_courses[i][j].getName }}
               {% endfor %}
-              is due on {{ results[i].getDueDate }}
+              is due on {{ results[i].getEnrollmentDate }}
             </li>
           </ul>
         {% endfor %}
       {% else %}
-        <h3>You have no tasks fool!</h3>
+        <h3>You have no students fool!</h3>
       {% endif %}
 
-      <a href='/'>Home!</a>
+      <a href='/'>Homie</a>
     </div>
   </body>
 </html>

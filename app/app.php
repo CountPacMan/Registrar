@@ -1,13 +1,13 @@
 <?php
   require_once __DIR__."/../vendor/autoload.php";
-  require_once __DIR__."/../src/Task.php";
-  require_once __DIR__."/../src/Category.php";
+  require_once __DIR__."/../src/Student.php";
+  require_once __DIR__."/../src/Course.php";
 
   $app = new Silex\Application();
 
   $app['debug'] = true;
 
-  $DB = new PDO('pgsql:host=localhost;dbname=to_do;user=postgres;password=password');
+  $DB = new PDO('pgsql:host=localhost;dbname=registrar');
 
   $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/../views'
@@ -19,82 +19,82 @@
   // get
 
   $app->get("/", function() use ($app) {
-    return $app['twig']->render('index.html.twig', array('added' => false, 'categories' => Category::getAll()));
+    return $app['twig']->render('index.html.twig', array('added' => false, 'courses' => Course::getAll()));
   });
 
-  $app->get("/categories/{id}", function($id) use ($app) {
-    $category = Category::find($id);
-    return $app['twig']->render('category.html.twig', array('category' => $category, 'tasks' => $category->getTasks()));
+  $app->get("/courses/{id}", function($id) use ($app) {
+    $course = Course::find($id);
+    return $app['twig']->render('courses.html.twig', array('course' => $course, 'students' => $course->getStudents()));
   });
 
-  $app->get("/categories/{id}/edit", function($id) use ($app) {
-    $category = Category::find($id);
-    return $app['twig']->render('category_edit.html.twig', array('category' => $category));
+  $app->get("/courses/{id}/edit", function($id) use ($app) {
+    $course = Course::find($id);
+    return $app['twig']->render('courses_edit.html.twig', array('course' => $course));
   });
 
-  $app->get("/tasks", function() use ($app) {
-    $results = Task::getAll();
-    $results_categories = [];
+  $app->get("/students", function() use ($app) {
+    $results = Student::getAll();
+    $results_courses = [];
     foreach ($results as $result) {
-      $categories = $result->getCategories();
-      array_push($results_categories, $categories);
+      $courses = $result->getCourses();
+      array_push($results_courses, $courses);
     }
-    return $app['twig']->render('tasks.html.twig', array('results_categories' => $results_categories, 'results' => $results));
+    return $app['twig']->render('students.html.twig', array('results_courses' => $results_courses, 'results' => $results));
   });
 
   // post
 
-  $app->post("/categories", function() use ($app) {
-    $category = new Category($_POST['name']);
-    $category->save();
-    return $app['twig']->render('index.html.twig', array('added' => false, 'categories' => Category::getAll()));
+  $app->post("/courses", function() use ($app) {
+    $course = new Course($_POST['name'], $_POST['course_number']);
+    $course->save();
+    return $app['twig']->render('index.html.twig', array('added' => false, 'courses' => Course::getAll()));
   });
 
-  $app->post("/tasks", function() use ($app) {
-    $task = new Task($_POST['description'], null, $_POST['due_date']);
-    $task->save();
-    for ($i = 0; $i < count($_POST['category_id']); $i++) {
-      $category = Category::find($_POST['category_id'][$i]);
-      $category->addTask($task);
+  $app->post("/students", function() use ($app) {
+    $student = new Student($_POST['name'], $_POST['enrollment_date']);
+    $student->save();
+    for ($i = 0; $i < count($_POST['courses_id']); $i++) {
+      $course = Course::find($_POST['courses_id'][$i]);
+      $course->addStudent($student);
     }
-    return $app['twig']->render('index.html.twig', array('added' => true, 'categories' => Category::getAll()));
+    return $app['twig']->render('index.html.twig', array('added' => true, 'courses' => Course::getAll()));
   });
 
   $app->post("/search", function() use ($app) {
-    $results = Category::search($_POST['name']);
-    $results_categories = [];
+    $results = Course::search($_POST['name']);
+    $results_courses = [];
     foreach ($results as $result) {
-      $categories = $result->getCategories();
-      array_push($results_categories, $categories);
+      $courses = $result->getCourses();
+      array_push($results_courses, $courses);
     }
-    return $app['twig']->render('search_results.html.twig', array('results' => $results, 'results_categories' => $results_categories, 'search_term' => $_POST['name']));
+    return $app['twig']->render('search_results.html.twig', array('results' => $results, 'results_courses' => $results_courses, 'search_term' => $_POST['name']));
   });
 
-  $app->post("/deleteTasks", function() use ($app) {
-    Task::deleteAll();
+  $app->post("/deleteStudents", function() use ($app) {
+    Student::deleteAll();
     return $app['twig']->render('index.html.twig', array('added' => false));
   });
 
-  $app->post("/deleteCategories", function() use ($app) {
-    Category::deleteAll();
+  $app->post("/deleteCourses", function() use ($app) {
+    Course::deleteAll();
     return $app['twig']->render('index.html.twig', array('added' => false));
   });
 
   // patch
 
-  $app->patch("/categories/{id}", function($id) use ($app) {
+  $app->patch("/courses/{id}", function($id) use ($app) {
     $name = $_POST['name'];
-    $category = Category::find($id);
-    $category->update($name);
-    return $app['twig']->render('category.html.twig', array('category' => $category, 'tasks' => $category->getTasks()));
+    $course = Course::find($id);
+    $course->updateName($name);
+    return $app['twig']->render('course.html.twig', array('course' => $course, 'students' => $course->getStudents()));
   });
 
   // delete
 
-  $app->delete("/categories/{id}", function($id) use ($app) {
-    $category = Category::find($id);
-    $category->delete();
-    return $app['twig']->render('index.html.twig', array('added' => false, 'categories' => Category::getAll()));
+  $app->delete("/courses/{id}", function($id) use ($app) {
+    $course = Course::find($id);
+    $course->delete();
+    return $app['twig']->render('index.html.twig', array('added' => false, 'courses' => Course::getAll()));
   });
 
   return $app;

@@ -2,38 +2,45 @@
 <html>
   <head>
     <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <title>To Do List</title>
+    <title>Registrarinator</title>
   </head>
   <body>
     <div class='container'>
-      <h1>{{ category.getName }}</h1>
+      <!-- PAGE BANNER -->
 
-      {% if tasks is not empty %}
-        <p>Here are the tasks:</p>
+      <div class='page-header'>
+        <h1>Registrarinator</h1>
+        <h5>sweet regist-rawr-ing</h5>
+      </div>
+
+      <h1>{{ course.getName }}</h1>
+
+      {% if students is not empty %}
+        <p>Here are the students:</p>
         <ul>
-          {% for task in tasks %}
-            <li>{{ task.getDescription }} due {{ task.getDueDate }}</li>
+          {% for student in students %}
+            <li>{{ student.getName }} due {{ student.getEnrollmentDate }}</li>
           {% endfor %}
         </ul>
       {% endif %}
 
-      <h4>Add a task</h4>
+      <h4>Add a student</h4>
 
-      <form action='/tasks' method='post'>
-        <input id='category_id' name='category_id' type='hidden' value='{{ category.getId }}'>
+      <form action='/students' method='post'>
+        <input id='course_id' name='course_id' type='hidden' value='{{ course.getId }}'>
         <div class='form-group'>
-          <label for='description'>Task description:</label>
-          <input id='description' name='description' class='form-control' type='text' required>
+          <label for='name'>Student name:</label>
+          <input id='name' name='name' class='form-control' type='text' required>
         </div>
         <div class='form-group'>
-          <label for='due_date'>Task due date:</label>
+          <label for='due_date'>Student Enrollment Date:</label>
           <input id='due_date' name='due_date' class='form-control' type='text' required>
         </div>
-        <button type='submit' class='btn btn-success'>Add task</button>
+        <button type='submit' class='btn btn-success'>Add student</button>
       </form>
 
-      <p><a href='/categories/{{ category.getId }}/edit'>Edit this category!</a></p>
-      <p><a href='/'>Home!</a></p>
+      <p><a href='/courses/{{ course.getId }}/edit'>Edit this course</a></p>
+      <p><a href='/'>Home</a></p>
 
     </div>
   </body>

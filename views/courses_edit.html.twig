@@ -6,23 +6,30 @@
 </head>
 <body>
   <div class='container'>
-    <h1>Update the {{ category.getName }} category!</h1>
 
-    <form action='/categories/{{ category.getId }}' method='post'>
+    <!-- PAGE BANNER -->
+    <div class='page-header'>
+      <h1>Registrarinator</h1>
+      <h5>sweet regist-rawr-ing</h5>
+    </div>
+
+    <h1>Update the {{ course.getName }} course!</h1>
+
+    <form action='/courses/{{ course.getId }}' method='post'>
       <input name='_method' type='hidden' value='patch'>
 
       <div class='form-group'>
-        <label for='name'>Rename your category:</label>
+        <label for='name'>Rename your course:</label>
         <input id='name' name='name' class='form-control' type='text'>
       </div>
 
       <button type='submit' class='btn btn-success'>Update!</button>
     </form>
 
-    <form action='/categories/{{ category.getId }}' method='post'>
+    <form action='/courses/{{ course.getId }}' method='post'>
       <input name='_method' type='hidden' value='delete'>
 
-      <button type='submit' class='btn btn-success'>Delete this category!</button>
+      <button type='submit' class='btn btn-success'>Delete this course!</button>
     </form>
   </div>
 </body>
