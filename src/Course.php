@@ -60,7 +60,18 @@ class Course {
   }
 
   function addStudent($student) {
-    $GLOBALS['DB']->exec("INSERT INTO students_courses (course_id, student_id) VALUES ({$this->getId()}, {$student->getId()});");
+    $insert = true;
+    $query = $GLOBALS['DB']->query("SELECT * FROM students_courses;");
+    $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($results as $result) {
+      if ($result['student_id'] == $student->getId() && $result['course_id'] == $this->getId()) {
+        $insert = false;
+      }
+    }
+    if ($insert) {
+      $GLOBALS['DB']->exec("INSERT INTO students_courses (course_id, student_id) VALUES ({$this->getId()}, {$student->getId()});");
+    }
   }
 
   function getStudents() {

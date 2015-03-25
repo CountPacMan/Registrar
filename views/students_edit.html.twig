@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='/../css/styles.css'>
+    <title>Edit a thing!</title>
+  </head>
+  <body>
+    <div class='container'>
+
+      <!-- PAGE BANNER -->
+      <div class='page-header'>
+        <img src='/img/fakeu.png' alt='university logo'>
+        <div class='logo-words'>
+          <h1>Registrarinator</h1>
+          <h5>sweet regist-rawr-ing</h5>
+        </div>
+      </div>
+
+      <h1>Update {{ student.getName }}</h1>
+
+      <form action='/students/{{ student.getId }}' method='post'>
+        <input name='_method' type='hidden' value='patch'>
+
+        <div class='form-group'>
+          <label for='name'>Rename your student:</label>
+          <input id='name' name='name' class='form-control' type='text' value='{{ student.getName }}'>
+        </div>
+
+        <div class='form-group'>
+          {% for course in courses %}
+            <input type="checkbox" name="course_id[]" value="{{ course.getId }}" checked><a href="/courses/{{ course.getId }}"> {{ course.getName }} </a><br>
+          {% endfor %}
+          {% for course in other_courses %}
+            <input type="checkbox" name="course_id[]" value="{{ course.getId }}"><a href="/courses/{{ course.getId }}"> {{ course.getName }} </a><br>
+          {% endfor %}
+
+          <button type='submit' class='btn btn-success'>Update</button>
+        </div>
+      </form>
+
+      <form action='/students/{{ student.getId }}' method='post'>
+        <input name='_method' type='hidden' value='delete'>
+
+        <button type='submit' class='btn btn-danger'>Delete student</button>
+      </form>
+      <p><a href='/'>Home</a></p>
+    </div>
+  </body>
+</html>

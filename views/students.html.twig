@@ -23,7 +23,7 @@
                 <input name='_method' type='hidden' value='delete'>
                 <input type='submit' class='deleteLink' value='x'>
               </form>
-              {{ results[i].getName }}, enrolled in
+              <a href='/students/{{ results[i].getId }}/edit'>{{ results[i].getName }}</a>, enrolled in
               {{ results_courses[i]|length > 1 ? 'courses' : 'course' }}
               {% for j in 0..results_courses[i]|length - 1 %}
                 [{{ results_courses[i][j].getName }}]
